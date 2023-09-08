@@ -2,7 +2,6 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import MenuItems from './MenuItems';
 
 const Navbar: React.FC = () => {
   const router = useRouter();
@@ -17,7 +16,7 @@ const Navbar: React.FC = () => {
       <div className="md:w-[90%] lg:w-[80%] xl:w-[82%] w-[80%] flex mx-auto h-[70px]  ">
         <div className=" flex items-center justify-center mr-auto text-white">
           <Link href="/" className="font-semibold text-xl tracking-tight">
-          EasePay
+          Eaze
             </Link>
         </div>
         {/* <div className="hidden md:block mt-2 :ml-6">
@@ -43,8 +42,8 @@ const Navbar: React.FC = () => {
         </div> */}
         <div className="hidden md:block md:flex-grow ml-auto">
           <div className="flex justify-end">
-            <Link href="/dashboard" className="text-center w-[175px] h-[50px] mt-[10px] items-center justify-center p-[10px] border-[#ffffff] border rounded-[16px] font-semibold text-white text-[16px]">
-              Connect Wallet
+            <Link href="/create-account" className="text-center w-[175px] h-[50px] mt-[10px] items-center justify-center p-[10px] border-[#ffffff] border rounded-[16px] font-semibold text-white text-[16px]">
+              Create Account
             </Link>
           </div>
         </div>
@@ -85,8 +84,8 @@ const Navbar: React.FC = () => {
               );
             })} */}
             <div className=" flex justify-start my-5">
-            <Link href="/dashboard" className=" flex justify-center content-center w-[175px] h-[20px] py-[16px] top-8  px-[16px] border-[#ffffff] border rounded-[16px] font-semibold text-white text-[16px]">
-              Connect Wallet
+            <Link href="/create-account" className=" flex justify-center content-center w-[175px] h-[20px] py-[16px] top-8  px-[16px] border-[#ffffff] border rounded-[16px] font-semibold text-white text-[16px]">
+              Create Account
             </Link>
           </div>
           </div>

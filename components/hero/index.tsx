@@ -1,9 +1,10 @@
 import Image from 'next/image'
 import hero from "../../assets/top.png"
+import Link from 'next/link'
 
 export default function Hero() {
   return (
-    <div className="w-screen h-screen text-[#532775] bg-white" 
+    <div className="w-screen h-screen text-[#532775] mb-[70px] bg-white" 
     // style={{
     //   background: "linear-gradient(90deg, rgba(131, 126, 226, 1) 24%, rgba(114, 114, 226, 1) 58%, rgba(0, 212, 255, 1) 100%)"
     // }}
@@ -19,8 +20,10 @@ export default function Hero() {
           </p>
           <div className="flex justify-left mx-auto">
             <button
-              className="hover:underline bg-[#532775] text-white font-bold rounded-full  py-4 px-8">
+              className="bg-[#532775] text-white font-bold rounded-full  py-4 px-8">
+              <Link href="/create-account">
               Create Account
+            </Link>
             </button>
             {/* <button
               className="ml-4 hover:underline bg-white text-gray-800 font-bold rounded-full  py-4 px-8">

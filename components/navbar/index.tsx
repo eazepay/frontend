@@ -20,12 +20,12 @@ const Navbar: React.FC = () => {
           EasePay
             </Link>
         </div>
-        <div className="hidden md:block mt-2 :ml-6">
+        {/* <div className="hidden md:block mt-2 :ml-6">
           <div className="mx-14">
             {MenuItems.map((item, index) => {
               return (
                 <>
-                  {/* <Link href={item.url} key={index}>
+                  <Link href={item.url} key={index}>
                     <div
                       className={`flex mt-4 md:inline-block active:text-white md:mt-0 text-[16px] hover:text-white mr-4 cursor-pointer  ${router.asPath === item.url
                           ? "text-white border-b-4 border-[#1E50FF]"
@@ -35,12 +35,12 @@ const Navbar: React.FC = () => {
 
                       <p>{item.label}</p>
                     </div>
-                  </Link> */}
+                  </Link>
                 </>
               );
             })}
           </div>
-        </div>
+        </div> */}
         <div className="hidden md:block md:flex-grow ml-auto">
           <div className="flex justify-end">
             <Link href="/dashboard" className="text-center w-[175px] h-[50px] mt-[10px] items-center justify-center p-[10px] border-[#ffffff] border rounded-[16px] font-semibold text-white text-[16px]">
@@ -68,10 +68,10 @@ const Navbar: React.FC = () => {
       {menuOpen && (
         <div className="block md:hidden  w-[80%]">
           <div className="my-3 ml-9">
-            {MenuItems.map((item, index) => {
+            {/* {MenuItems.map((item, index) => {
               return (
                 <>
-                  {/* <Link href={item.url} key={index}>
+                  <Link href={item.url} key={index}>
                     <div
                       className={`flex mt-4 md:inline-block active:text-white md:mt-0 text-[16px] hover:text-white mr-4 cursor-pointer  ${router.asPath === item.url
                           ? "text-white"
@@ -80,10 +80,10 @@ const Navbar: React.FC = () => {
                     >
                       <p>{item.label}</p>
                     </div>
-                  </Link> */}
+                  </Link>
                 </>
               );
-            })}
+            })} */}
             <div className=" flex justify-start my-5">
             <Link href="/dashboard" className=" flex justify-center content-center w-[175px] h-[20px] py-[16px] top-8  px-[16px] border-[#ffffff] border rounded-[16px] font-semibold text-white text-[16px]">
               Connect Wallet

@@ -1,8 +1,48 @@
 import Link from 'next/link'
+import { useContractRead } from 'wagmi'
+import abi from '../../abi/abi.json'
+import { useState, useEffect, useContext } from "react";
+import { Context } from '@/context';
+
 
 export default function DashboardHero() {
+
+  const [ naira, setNaira ] = useState("")
+  const { contractAddress } = useContext(Context)
+  
+    // useEffect(() => {
+    const nairadata = useContractRead({
+      address: contractAddress,
+      abi: abi,
+      functionName: 'currencyPrices',
+      args: ['naira']
+    })
+
+    const cedisdata = useContractRead({
+      address: contractAddress,
+      abi: abi,
+      functionName: 'currencyPrices',
+      args: ['cedis']
+    })
+
+    const cfadata = useContractRead({
+      address: contractAddress,
+      abi: abi,
+      functionName: 'currencyPrices',
+      args: ['cfa']
+    })
+
+    console.log("data", cfadata.data?.toString());
+
+    // cedisdata.data?.toString()
+    // setNaira(nairadata.data?.toString())
+    
+  // }, [])
+
+  // console.log("data", naira);
+
   return (
-    <div className="md:w-screen md:h-screen h-full text-[#532775] bg-white"
+    <div className="w-full h-full text-[#532775] bg-white"
     >
       <div className="container mx-auto flex px-5 py-10 items-center justify-center md:flex-row-reverse flex-col-reverse w-[90%]">
         <div className="text-left w-full">
@@ -11,21 +51,28 @@ export default function DashboardHero() {
           </h1> */}
           <div>
             {/* <p className='text-2xl font-bold leading-tight mb-4'>Current Holding</p> */}
+            <div className='flex justify-center items-center'>
+              <div className='flex bg-[#4527a0] text-white w-full mr-2 mb-2 h-[150px] justify-center items-center border rounded-2xl'>
+                <span className='text-[50px] mr-2'>0</span>
+                <span>Eaze Token</span>
+              </div>
+            </div>
+            <p className='text-2xl font-bold leading-tight my-4'>Current Exchange Rates</p>
             <div className='flex md:flex-row flex-col mb-6'>
               <div className='flex bg-[#532775] text-white md:w-1/4 w-full mr-2 mb-2 h-[150px] justify-center items-center border rounded-2xl'>
                 <span className='text-[50px] mr-2'>0</span>
                 <span>USD</span>
               </div>
               <div className='flex bg-[#532775] text-white md:w-1/4 w-full mr-2 mb-2 h-[150px] justify-center items-center border rounded-2xl'>
-                <span className='text-[50px] mr-2'>0</span>
+                <span className='text-[50px] mr-2'> { nairadata?.data?.toString() } </span>
                 <span>NGN</span>
               </div>
               <div className='flex bg-[#532775] text-white md:w-1/4 w-full mr-2 mb-2 h-[150px] justify-center items-center border rounded-2xl'>
-                <span className='text-[50px] mr-2'>0</span>
+                <span className='text-[50px] mr-2'>{ cedisdata.data?.toString()}</span>
                 <span>Cedis</span>
               </div>
               <div className='flex bg-[#532775] text-white md:w-1/4 w-full mr-2 mb-2 h-[150px] justify-center items-center border rounded-2xl'>
-                <span className='text-[50px] mr-2'>0</span>
+                <span className='text-[50px] mr-2'>{cfadata.data?.toString()}</span>
                 <span>CFA</span>
               </div>
             </div>
@@ -38,11 +85,11 @@ export default function DashboardHero() {
                 <p>2nd Sept, 2023</p>
               </div>
               <div>
-              <div className='px-4'> 
-                <Link href="/" className='text-center mt-2 flex justify-center underline'>
-                  View Tx
-                </Link>
-              </div>
+                <div className='px-4'>
+                  <Link href="/" className='text-center mt-2 flex justify-center underline'>
+                    View Tx
+                  </Link>
+                </div>
               </div>
             </div>
             <div className='container flex flex-row justify-between bg-[#d0c5c56e] p-3 my-2 rounded-xl border text-[#333333]'>
@@ -50,7 +97,7 @@ export default function DashboardHero() {
                 <p className='text-leading text-xl font-semi-bold leading-tight'>Sent <span>20</span><span className='ml-1'>NGN</span> to <span >79283738383 UBA Bank</span></p>
                 <p>2nd Sept, 2023</p>
               </div>
-              <div className='px-4'> 
+              <div className='px-4'>
                 <Link href="/" className='text-center mt-2 flex justify-center underline'>
                   View Tx
                 </Link>
@@ -61,7 +108,7 @@ export default function DashboardHero() {
                 <p className='text-leading text-xl font-semi-bold leading-tight'>Received <span>20</span><span className='ml-1'>Cedis</span> from <span >0x79283738383</span></p>
                 <p>6nd Sept, 2023</p>
               </div>
-              <div className='px-4'> 
+              <div className='px-4'>
                 <Link href="/" className='text-center mt-2 flex justify-center underline'>
                   View Tx
                 </Link>

@@ -15,7 +15,7 @@ import {
 } from '@rainbow-me/rainbowkit';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import {
-  sepolia,
+  goerli,
 } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
@@ -24,10 +24,10 @@ import { publicProvider } from 'wagmi/providers/public';
 export default function App({ Component, pageProps }: AppProps) {
   const { chains, publicClient } = configureChains(
     [
-      sepolia,
+      goerli,
     ],
     [
-      alchemyProvider({ apiKey: "OX3RapyydEnhd6AdL2nCS68RUpI1pV5t" }),
+      alchemyProvider({ apiKey: "FVhKzRogIAlI_zgqGdtgyVzZYTL9_yct" }),
       publicProvider()
     ]
   );

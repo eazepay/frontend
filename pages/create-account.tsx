@@ -31,7 +31,7 @@ export default function CreateAcount() {
               {/* <br></br> */}
               <button className='flex flex-row justify-center items-center my-3 w-full border rounded-2xl bg-white py-[25px] px-[70px]'>
                 <Image width={40} height={40} src={argent} alt="Argent logo" className='mr-2' />
-                Create account with Argent
+                Create smart account with Argent
               </button>
             </div>
           </div>

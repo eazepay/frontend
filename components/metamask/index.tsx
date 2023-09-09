@@ -2,13 +2,22 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import Image from 'next/image'
 import metamask from "../../assets/metamask.svg"
 
+import { useRouter } from "next/navigation";
 import { useState, useEffect, useContext } from "react";
 import { Context } from '@/context';
 
 export const MetaMask = () => {
-  const { user, setUser} = useContext(Context)
+  const { user, setUser } = useContext(Context)
   console.log("checking user", user);
+  const router = useRouter();
 
+  function reroute () {
+
+    router.push('/security-questions');
+  }
+
+  
+  
   return (
     <ConnectButton.Custom>
       {({
@@ -29,18 +38,23 @@ export const MetaMask = () => {
           chain &&
           (!authenticationStatus ||
             authenticationStatus === 'authenticated');
-          
-          setUser({
-            address: account?.address,
-            displayName: account?.displayName,
-            displayBalance: account?.displayBalance,
-            balanceSymbol: account?.balanceSymbol,
-            })
 
-          console.log("account dets", user);
-          // console.log("account dets", account?.displayName);
-          // balanceSymbol
-          // displayBalance
+       
+            if (connected) {
+              setUser({
+                address: account?.address,
+                displayName: account?.displayName,
+                displayBalance: account?.displayBalance,
+                balanceSymbol: account?.balanceSymbol,
+              })
+    
+              console.log("account dets", user);
+    
+              reroute()
+            }
+        // console.log("account dets", account?.displayName);
+        // balanceSymbol
+        // displayBalance
         return (
           <div
             {...(!ready && {
@@ -56,9 +70,9 @@ export const MetaMask = () => {
               if (!connected) {
                 return (
                   <button onClick={openConnectModal} type="button" className='flex flex-row justify-center items-center my-3 w-full border rounded-2xl bg-white py-[25px] px-[70px]' >
-                  <Image width={40} height={40} src={metamask} alt="MetaMask logo" className='mr-2' />
-                  Create account with MetaMask
-                </button>
+                    <Image width={40} height={40} src={metamask} alt="MetaMask logo" className='mr-2' />
+                    Create account with MetaMask
+                  </button>
                 );
               }
               if (chain.unsupported) {

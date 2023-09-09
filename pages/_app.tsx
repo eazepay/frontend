@@ -41,7 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
   
   const { connectors } = getDefaultWallets({
     appName: 'Eaze',
-    projectId: '',
+    projectId: '8a929aebabc3d63fc70ba30c3405b0dd',
     chains
   });
 

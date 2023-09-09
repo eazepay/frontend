@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import hero from "../../assets/top.png"
 import Link from 'next/link'
 
 export default function DashboardHero() {

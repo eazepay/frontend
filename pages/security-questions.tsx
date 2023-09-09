@@ -1,9 +1,5 @@
-import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import hero from "../assets/woman.jpg"
-import argent from "../assets/argent.webp"
 import Link from 'next/link'
-import { MetaMask } from '@/components/metamask'
 import Navbar from '@/components/navbar-dashboard'
 import Footer from '@/components/footer'
 

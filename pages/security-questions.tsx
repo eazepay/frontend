@@ -30,7 +30,7 @@ export default function SeurityQuestions() {
   })
 
   const {isLoading, isSuccess} = useWaitForTransaction({
-    hash: data?.hash,
+    hash: data?.data?.hash,
   })
   
 

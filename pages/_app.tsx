@@ -7,7 +7,7 @@ import {
   walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 
-
+import {ContextProvider} from '../context/index'
 import '@rainbow-me/rainbowkit/styles.css';
 import {
   getDefaultWallets,
@@ -15,11 +15,7 @@ import {
 } from '@rainbow-me/rainbowkit';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import {
-  mainnet,
-  polygon,
-  polygonMumbai,
   sepolia,
-  goerli,
 } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
@@ -27,11 +23,8 @@ import { publicProvider } from 'wagmi/providers/public';
 
 export default function App({ Component, pageProps }: AppProps) {
   const { chains, publicClient } = configureChains(
-    [mainnet,
-      polygon,
-      polygonMumbai,
+    [
       sepolia,
-      goerli,
     ],
     [
       alchemyProvider({ apiKey: "OX3RapyydEnhd6AdL2nCS68RUpI1pV5t" }),
@@ -64,9 +57,12 @@ export default function App({ Component, pageProps }: AppProps) {
   })
 
   return (
+    
+    <ContextProvider>
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
         <Component {...pageProps} />
       </RainbowKitProvider>
-    </WagmiConfig>)
-}
+    </WagmiConfig>
+    </ContextProvider>
+    )}

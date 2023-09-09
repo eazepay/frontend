@@ -1,9 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+
+import { useState, useEffect, useContext } from "react";
+import { Context } from '@/context';
 
 const Navbar: React.FC = () => {
+  
+  const { user } = useContext(Context)
+  console.log("checking user", user);
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -23,7 +28,7 @@ const Navbar: React.FC = () => {
         <div className="hidden md:block md:flex-grow ml-auto">
           <div className="flex justify-end">
             <Link href="" className="font-semibold text-lg tracking-tight text-white justify-center items-center mt-5 mr-2">
-              0x6737898..
+              {user.address}
             </Link>
             <Link href="/create-account" className="text-center w-[175px] h-[50px] mt-[10px] items-center justify-center p-[10px] border-[#ffffff] bg-white text-[#532775] border rounded-[16px] font-semibold hover:bg-[#532775] hover:text-white text-[16px] mr-2">
               Fund Wallet
@@ -55,7 +60,7 @@ const Navbar: React.FC = () => {
           <div className="py-3 ml-9">
             <div className=" flex flex-col  pb-8">
               <Link href="" className="font-semibold text-lg tracking-tight text-white justify-center items-center  mr-2">
-                0x6737898999..
+                {user.address}
               </Link>
               <Link href="/create-account" className="text-center w-full h-[50px] mt-[10px] items-center justify-center p-[10px] border-[#ffffff] bg-white text-[#532775] border rounded-[16px] font-semibold hover:bg-[#532775] hover:text-white text-[16px] mr-2">
                 Fund Wallet

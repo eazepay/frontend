@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Navbar from '@/components/navbar-dashboard'
 import Footer from '@/components/footer'
 
-import { useContractRead, useContractWrite } from 'wagmi'
+import { useContractRead, useContractWrite, useWaitForTransaction} from 'wagmi'
 import abi from '../abi/abi.json'
 import { useState, useEffect, useContext } from "react";
 import { Context } from '@/context';
@@ -22,33 +22,40 @@ export default function SeurityQuestions() {
   const router = useRouter();
 
   console.log(user.username);
+  const data = useContractWrite({
+    address: contractAddress,
+    abi: abi,
+    functionName: 'join',
+    args: [user.username]
+  })
 
+  const {isLoading, isSuccess} = useWaitForTransaction({
+    hash: data?.hash,
+  })
   
 
-  const UpdateUser = (e:any) => {
+  const UpdateUser =  (e:any) => {
 
     e.preventDefault();
-    setUser(username);
+
     
-    // const cfadata = useContractRead({
-    //   address: contractAddress,
-    //   abi: abi,
-    //   functionName: 'join',
-    //   args: [user.username]
-    // })
+     data.write()
+        router.push('/dashboard'); 
 
-    const data = useContractWrite({
-      address: contractAddress,
-      abi: abi,
-      functionName: 'join',
-      args: [user.username]
-    })
+    // console.log("joining", data)
 
-    // write()
-    console.log("joining", data.data)
-    router.push('/dashboard');
 
   }
+  console.log(isSuccess)
+
+  // useEffect(() => {
+  //   if(isSuccess) {
+
+  //     router.push('/dashboard'); 
+
+  //   } 
+  // }, [isSuccess])
+  
 
 
   return (
@@ -133,6 +140,7 @@ export default function SeurityQuestions() {
               <div>
                 <button
                   // onClick={() => updateUser()}
+                  disabled={isLoading}
                   className="flex w-full justify-center rounded-md bg-[#532775] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#532775] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#532775]"
                 >
                   Submit

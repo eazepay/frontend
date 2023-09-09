@@ -77,7 +77,7 @@ export default function DashboardHero() {
               </div>
             </div>
           </div>
-          <div className="mx-auto mt-10">
+          {/* <div className="mx-auto mt-10">
             <p className='text-2xl font-bold leading-tight mb-8'>Recent Transactions</p>
             <div className='container flex flex-row justify-between bg-[#d0c5c56e] p-3 my-2 rounded-xl border text-[#333333]'>
               <div className='px-4'>
@@ -114,7 +114,7 @@ export default function DashboardHero() {
                 </Link>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div >

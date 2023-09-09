@@ -72,7 +72,7 @@ export const MetaMask = () => {
                         }}
                       >
                         {chain.iconUrl && (
-                          <img
+                          <Image
                             alt={chain.name ?? 'Chain icon'}
                             src={chain.iconUrl}
                             style={{ width: 12, height: 12 }}

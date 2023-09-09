@@ -25,7 +25,7 @@ export default function SeurityQuestions() {
 
   
 
-  const updateUser = (e:any) => {
+  const UpdateUser = (e:any) => {
 
     e.preventDefault();
     setUser(username);
@@ -37,7 +37,7 @@ export default function SeurityQuestions() {
     //   args: [user.username]
     // })
 
-    const { data, isLoading, isSuccess, write } = useContractWrite({
+    const data = useContractWrite({
       address: contractAddress,
       abi: abi,
       functionName: 'join',
@@ -45,7 +45,7 @@ export default function SeurityQuestions() {
     })
 
     // write()
-    console.log("joining", data)
+    console.log("joining", data.data)
     router.push('/dashboard');
 
   }
@@ -59,7 +59,7 @@ export default function SeurityQuestions() {
 
           <h3 className='my-4 md:py-2 text-5xl font-bold leading-tight text-center'>Security Questions</h3>
           <div className="mt-1 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" onSubmit={updateUser} >
+            <form className="space-y-6" onSubmit={UpdateUser} >
 
             <div>
                 <label htmlFor="question1" className="block text-sm font-medium leading-6 text-gray-900">

@@ -52,7 +52,7 @@ export default function SeurityQuestions() {
 
               <div>
                 <label htmlFor="question3" className="block text-sm font-medium leading-6 text-gray-900">
-                  What is your mother's maiden name?
+                  What is your mother&apos;s maiden name?
                 </label>
                 <div className="mt-2">
                   <input
@@ -61,7 +61,7 @@ export default function SeurityQuestions() {
                     type="text"
                     autoComplete="question3"
                     required
-                    placeholder="What is your mother's maiden name?"
+                    placeholder="What is your mother&apos;s maiden name?"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#532775] sm:text-sm sm:leading-6"
                   />
                 </div>

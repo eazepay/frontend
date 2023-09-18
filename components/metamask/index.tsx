@@ -1,23 +1,20 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit'
-import Image from 'next/image'
-import metamask from "../../assets/metamask.svg"
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import Image from "next/image";
+import metamask from "../../assets/metamask.svg";
 
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useContext } from "react";
-import { Context } from '@/context';
+import { Context } from "@/context";
 
 export const MetaMask = () => {
-  const { user, setUser } = useContext(Context)
+  const { user, setUser } = useContext(Context);
   console.log("checking user", user);
   const router = useRouter();
 
-  function reroute () {
-
-    router.push('/security-questions');
+  function reroute() {
+    router.push("/security-questions");
   }
 
-  
-  
   return (
     <ConnectButton.Custom>
       {({
@@ -31,46 +28,54 @@ export const MetaMask = () => {
       }) => {
         // Note: If your app doesn't use authentication, you
         // can remove all 'authenticationStatus' checks
-        const ready = mounted && authenticationStatus !== 'loading';
+        const ready = mounted && authenticationStatus !== "loading";
         const connected =
           ready &&
           account &&
           chain &&
-          (!authenticationStatus ||
-            authenticationStatus === 'authenticated');
+          (!authenticationStatus || authenticationStatus === "authenticated");
 
-       
-            if (connected) {
-              setUser({
-                address: account?.address,
-                displayName: account?.displayName,
-                displayBalance: account?.displayBalance,
-                balanceSymbol: account?.balanceSymbol,
-              })
-    
-              console.log("account dets", user);
-    
-              reroute()
-            }
+        // if (connected) {
+        //   setUser({
+        //     address: account?.address,
+        //     displayName: account?.displayName,
+        //     displayBalance: account?.displayBalance,
+        //     balanceSymbol: account?.balanceSymbol,
+        //   })
+
+        //   console.log("account dets", user);
+
+        //   reroute()
+        // }
         // console.log("account dets", account?.displayName);
         // balanceSymbol
         // displayBalance
         return (
           <div
             {...(!ready && {
-              'aria-hidden': true,
-              'style': {
+              "aria-hidden": true,
+              style: {
                 opacity: 0,
-                pointerEvents: 'none',
-                userSelect: 'none',
+                pointerEvents: "none",
+                userSelect: "none",
               },
             })}
           >
             {(() => {
               if (!connected) {
                 return (
-                  <button onClick={openConnectModal} type="button" className='flex flex-row justify-center items-center my-3 w-full border rounded-2xl bg-white py-[25px] px-[70px]' >
-                    <Image width={40} height={40} src={metamask} alt="MetaMask logo" className='mr-2' />
+                  <button
+                    onClick={openConnectModal}
+                    type="button"
+                    className="flex flex-row justify-center items-center my-3 w-full border rounded-2xl bg-white py-[25px] px-[70px]"
+                  >
+                    <Image
+                      width={40}
+                      height={40}
+                      src={metamask}
+                      alt="MetaMask logo"
+                      className="mr-2"
+                    />
                     Create account with MetaMask
                   </button>
                 );
@@ -83,10 +88,10 @@ export const MetaMask = () => {
                 );
               }
               return (
-                <div style={{ display: 'flex', gap: 12 }}>
+                <div style={{ display: "flex", gap: 12 }}>
                   <button
                     onClick={openChainModal}
-                    style={{ display: 'flex', alignItems: 'center' }}
+                    style={{ display: "flex", alignItems: "center" }}
                     type="button"
                   >
                     {chain.hasIcon && (
@@ -96,13 +101,13 @@ export const MetaMask = () => {
                           width: 12,
                           height: 12,
                           borderRadius: 999,
-                          overflow: 'hidden',
+                          overflow: "hidden",
                           marginRight: 4,
                         }}
                       >
                         {chain.iconUrl && (
                           <img
-                            alt={chain.name ?? 'Chain icon'}
+                            alt={chain.name ?? "Chain icon"}
                             src={chain.iconUrl}
                             style={{ width: 12, height: 12 }}
                           />
@@ -115,7 +120,7 @@ export const MetaMask = () => {
                     {account.displayName}
                     {account.displayBalance
                       ? ` (${account.displayBalance})`
-                      : ''}
+                      : ""}
                   </button>
                 </div>
               );

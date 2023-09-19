@@ -1,16 +1,23 @@
-import React from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import React from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { useState, useEffect, useContext } from "react";
-import { Context } from '@/context';
+import { Context } from "@/context";
+import { useAccount, useDisconnect } from "wagmi";
 
 const Navbar: React.FC = () => {
-  
-  const { user } = useContext(Context)
-  console.log("checking user", user);
+  const { user } = useContext(Context);
+  const { address } = useAccount();
+  const { disconnect } = useDisconnect();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!address) {
+      router.push("/");
+    }
+  }, [address, router]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -27,15 +34,24 @@ const Navbar: React.FC = () => {
 
         <div className="hidden md:block md:flex-grow ml-auto">
           <div className="flex justify-end">
-            <Link href="" className="font-semibold text-lg tracking-tight text-white justify-center items-center mt-5 mr-2">
+            <Link
+              href=""
+              className="font-semibold text-lg tracking-tight text-white justify-center items-center mt-5 mr-2"
+            >
               {user.displayName}
             </Link>
-            <Link href="/create-account" className="text-center w-[175px] h-[50px] mt-[10px] items-center justify-center p-[10px] border-[#ffffff] bg-white text-[#532775] border rounded-[16px] font-semibold hover:bg-[#532775] hover:text-white text-[16px] mr-2">
+            <Link
+              href="/create-account"
+              className="text-center w-[175px] h-[50px] mt-[10px] items-center justify-center p-[10px] border-[#ffffff] bg-white text-[#532775] border rounded-[16px] font-semibold hover:bg-[#532775] hover:text-white text-[16px] mr-2"
+            >
               Fund Wallet
             </Link>
-            <Link href="#" className="text-center w-[175px] h-[50px] mt-[10px] items-center justify-center p-[10px] border-[#ffffff] border rounded-[16px] font-semibold text-white text-[16px]">
+            <button
+              onClick={() => disconnect()}
+              className="text-center w-[175px] h-[50px] mt-[10px] items-center justify-center p-[10px] border-[#ffffff] border rounded-[16px] font-semibold text-white text-[16px]"
+            >
               Log Out
-            </Link>
+            </button>
           </div>
         </div>
         <div className="block md:hidden">
@@ -59,23 +75,30 @@ const Navbar: React.FC = () => {
         <div className="block md:hidden  w-[90%] ">
           <div className="py-3 ml-9">
             <div className=" flex flex-col  pb-8">
-              <Link href="" className="font-semibold text-lg tracking-tight text-white justify-center items-center  mr-2">
+              <Link
+                href=""
+                className="font-semibold text-lg tracking-tight text-white justify-center items-center  mr-2"
+              >
                 {user.displayName}
               </Link>
-              <Link href="/create-account" className="text-center w-full h-[50px] mt-[10px] items-center justify-center p-[10px] border-[#ffffff] bg-white text-[#532775] border rounded-[16px] font-semibold hover:bg-[#532775] hover:text-white text-[16px] mr-2">
+              <Link
+                href="/create-account"
+                className="text-center w-full h-[50px] mt-[10px] items-center justify-center p-[10px] border-[#ffffff] bg-white text-[#532775] border rounded-[16px] font-semibold hover:bg-[#532775] hover:text-white text-[16px] mr-2"
+              >
                 Fund Wallet
               </Link>
-              <Link href="#" className="text-center w-full h-[50px] mt-[10px] items-center justify-center p-[10px] border-[#ffffff] border rounded-[16px] font-semibold text-white text-[16px]">
+              <button
+                onClick={() => disconnect()}
+                className="text-center w-full h-[50px] mt-[10px] items-center justify-center p-[10px] border-[#ffffff] border rounded-[16px] font-semibold text-white text-[16px]"
+              >
                 Log Out
-              </Link>
+              </button>
             </div>
           </div>
         </div>
-
       )}
     </nav>
   );
 };
-
 
 export default Navbar;

@@ -5,18 +5,17 @@ import Footer from "@/components/footer";
 
 import { useContractWrite } from "wagmi";
 import { useState, useEffect, useContext } from "react";
-import { Context } from "@/context";
 
 import { useRouter } from "next/navigation";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "@/lib";
+import { Context } from "@/context";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function SeurityQuestions() {
   const [username, setUsername] = useState("");
-
-  const { user, setUser, contractAddress } = useContext(Context);
-
+  // const { user } = useContext(Context);
+  // console.log(user);
   const router = useRouter();
 
   const join = useContractWrite({
@@ -28,8 +27,6 @@ export default function SeurityQuestions() {
 
   const UpdateUser = (e: any) => {
     e.preventDefault();
-    setUser(username);
-
     join.write();
   };
 
@@ -37,14 +34,19 @@ export default function SeurityQuestions() {
     if (join.isSuccess) {
       router.push("/dashboard");
     }
-  }, [join.isSuccess]);
+
+    if (join.isError) {
+      alert(join.error?.cause);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [join.isSuccess, join.isError]);
 
   return (
     <main>
       <Navbar />
-      <div className="flex w-screen h-full  flex-1 flex-col justify-center px-6 py-1 lg:px-8">
+      <div className="flex w-screen h-full bg-white  flex-1 flex-col justify-center px-6 py-1 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-lg">
-          <h3 className="my-4 md:py-2 text-5xl font-bold leading-tight text-center">
+          <h3 className="my-4 md:py-2 text-5xl font-bold text-black leading-tight text-center">
             Security Questions
           </h3>
           <div className="mt-1 sm:mx-auto sm:w-full sm:max-w-sm">

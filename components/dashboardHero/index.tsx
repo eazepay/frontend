@@ -1,12 +1,23 @@
 import Link from "next/link";
-import { useContractRead, useContractReads } from "wagmi";
-import { useState } from "react";
+import { useAccount, useContractRead, useContractReads } from "wagmi";
+import { useContext, useEffect, useState } from "react";
 import { CONTRACT_ABI, CONTRACT_ADDRESS, CONTRACT_CONFIG } from "@/lib";
+import { Context } from "@/context";
+import { useRouter } from "next/router";
 // import { useQuery } from '@apollo/client';
 // import gql from 'graphql-tag';
 
 export default function DashboardHero() {
   const [naira, setNaira] = useState("");
+  const router = useRouter();
+  const { address } = useAccount();
+  const { user } = useContext(Context);
+
+  useEffect(() => {
+    if (!address) {
+      router.push("/");
+    }
+  }, [user.isActive, address, router]);
 
   //     const GET_CURRENCY_WITHDRAWS = gql`
   //   {
@@ -41,7 +52,7 @@ export default function DashboardHero() {
             {/* <p className='text-2xl font-bold leading-tight mb-4'>Current Holding</p> */}
             <div className="flex justify-center items-center">
               <div className="flex bg-[#4527a0] text-white w-full mr-2 mb-2 h-[150px] justify-center items-center border rounded-2xl">
-                <span className="text-[50px] mr-2">0</span>
+                <span className="text-[50px] mr-2">{user?.displayBalance}</span>
                 <span>Eaze Token</span>
               </div>
             </div>

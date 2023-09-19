@@ -27,13 +27,12 @@ export default function CreateAcount() {
   });
 
   useEffect(() => {
-    if (address && Number(userId) > 0) {
+    if (address && Number(userId?.data) > 0) {
       router.push("/dashboard");
     } else if (address) {
       router.push("/security-questions");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address]);
+  }, [address, router, userId?.data]);
 
   return (
     <main>

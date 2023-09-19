@@ -2,19 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 import metamask from "../../assets/metamask.svg";
 
-import { useRouter } from "next/navigation";
-import { useState, useEffect, useContext } from "react";
-import { Context } from "@/context";
-
 export const MetaMask = () => {
-  const { user, setUser } = useContext(Context);
-  console.log("checking user", user);
-  const router = useRouter();
-
-  function reroute() {
-    router.push("/security-questions");
-  }
-
   return (
     <ConnectButton.Custom>
       {({
@@ -34,22 +22,6 @@ export const MetaMask = () => {
           account &&
           chain &&
           (!authenticationStatus || authenticationStatus === "authenticated");
-
-        // if (connected) {
-        //   setUser({
-        //     address: account?.address,
-        //     displayName: account?.displayName,
-        //     displayBalance: account?.displayBalance,
-        //     balanceSymbol: account?.balanceSymbol,
-        //   })
-
-        //   console.log("account dets", user);
-
-        //   reroute()
-        // }
-        // console.log("account dets", account?.displayName);
-        // balanceSymbol
-        // displayBalance
         return (
           <div
             {...(!ready && {

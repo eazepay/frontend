@@ -1,13 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
 import { useState, useEffect, useContext } from "react";
 import { Context } from "@/context";
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount, useDisconnect, useContractWrite } from "wagmi";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "@/lib";
 
 const Navbar: React.FC = () => {
-  const { user } = useContext(Context);
+  const userContx = useContext(Context);
   const { address } = useAccount();
   const { disconnect } = useDisconnect();
   const router = useRouter();
@@ -22,6 +22,30 @@ const Navbar: React.FC = () => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  
+  const join = useContractWrite({
+    address: CONTRACT_ADDRESS,
+    abi: CONTRACT_ABI,
+    functionName: "join",
+    // args: [username],
+  });
+
+  const UpdateUser = (e: any) => {
+    e.preventDefault();
+    join.write();
+  };
+
+  useEffect(() => {
+    if (join.isSuccess) {
+      router.push("/dashboard");
+    }
+
+    if (join.isError) {
+      alert(join.error?.cause);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [join.isSuccess, join.isError]);
 
   return (
     <nav className=" mx-auto w-full px-5 bg-[#532775]">
@@ -38,13 +62,13 @@ const Navbar: React.FC = () => {
               href=""
               className="font-semibold text-lg tracking-tight text-white justify-center items-center mt-5 mr-2"
             >
-              {user.displayName}
+              {userContx?.user.displayName}
             </Link>
             <Link
-              href="/fund-wallet"
+              href="/"
               className="text-center w-[175px] h-[50px] mt-[10px] items-center justify-center p-[10px] border-[#ffffff] bg-white text-[#532775] border rounded-[16px] font-semibold hover:bg-[#532775] hover:text-white text-[16px] mr-2"
             >
-              Fund Wallet
+              Dashboard
             </Link>
             <button
               onClick={() => disconnect()}
@@ -79,7 +103,7 @@ const Navbar: React.FC = () => {
                 href=""
                 className="font-semibold text-lg tracking-tight text-white justify-center items-center  mr-2"
               >
-                {user.displayName}
+                {userContx?.user.displayName}
               </Link>
               <Link
                 href="/create-account"

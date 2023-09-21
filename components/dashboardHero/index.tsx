@@ -1,49 +1,48 @@
-import Link from 'next/link'
-import { useContractRead } from 'wagmi'
-import abi from '../../abi/abi.json'
-import { useState, useEffect, useContext } from "react";
-import { Context } from '@/context';
-
+import Link from "next/link";
+import { useAccount, useContractRead, useContractReads } from "wagmi";
+import { useContext, useEffect, useState } from "react";
+import { CONTRACT_ABI, CONTRACT_ADDRESS, CONTRACT_CONFIG } from "@/lib";
+import { Context } from "@/context";
+import { useRouter } from "next/router";
+// import { useQuery } from '@apollo/client';
+// import gql from 'graphql-tag';
 
 export default function DashboardHero() {
+  const [naira, setNaira] = useState("");
+  const router = useRouter();
+  const { address } = useAccount();
+  const userContx  = useContext(Context);
 
-  const [ naira, setNaira ] = useState("")
-  const { contractAddress } = useContext(Context)
-  
-    // useEffect(() => {
-    const nairadata = useContractRead({
-      address: contractAddress,
-      abi: abi,
-      functionName: 'currencyPrices',
-      args: ['naira']
-    })
+  useEffect(() => {
+    if (!address) {
+      router.push("/");
+    }
+  }, [userContx?.user?.isActive, address, router]);
 
-    const cedisdata = useContractRead({
-      address: contractAddress,
-      abi: abi,
-      functionName: 'currencyPrices',
-      args: ['cedis']
-    })
+  //     const GET_CURRENCY_WITHDRAWS = gql`
+  //   {
+  //     currencyWithdraws(first: 5) {
+  //       id
+  //       user
+  //       currencySymbol
+  //       amount
+  //     }
+  //   }
+  // `;
 
-    const cfadata = useContractRead({
-      address: contractAddress,
-      abi: abi,
-      functionName: 'currencyPrices',
-      args: ['cfa']
-    })
+  const currencyPrices = useContractReads({
+    contracts: [
+      { ...CONTRACT_CONFIG, functionName: "currencyPrices", args: ["usdt"] },
+      { ...CONTRACT_CONFIG, functionName: "currencyPrices", args: ["naira"] },
+      { ...CONTRACT_CONFIG, functionName: "currencyPrices", args: ["cedis"] },
+      { ...CONTRACT_CONFIG, functionName: "currencyPrices", args: ["cefas"] },
+    ],
+  });
 
-    console.log("data", cfadata.data?.toString());
-
-    // cedisdata.data?.toString()
-    // setNaira(nairadata.data?.toString())
-    
-  // }, [])
-
-  // console.log("data", naira);
+  const currencies = ["USD", "NGN", "Cedis", "CFA"];
 
   return (
-    <div className="w-full h-full text-[#532775] bg-white"
-    >
+    <div className="w-full h-full text-[#532775] bg-white">
       <div className="container mx-auto flex px-5 py-10 items-center justify-center md:flex-row-reverse flex-col-reverse w-[90%]">
         <div className="text-left w-full">
           {/* <h1 className="my-4 mt-[10px] md:py-8 text-5xl font-bold leading-tight">
@@ -51,72 +50,95 @@ export default function DashboardHero() {
           </h1> */}
           <div>
             {/* <p className='text-2xl font-bold leading-tight mb-4'>Current Holding</p> */}
-            <div className='flex justify-center items-center'>
-              <div className='flex bg-[#4527a0] text-white w-full mr-2 mb-2 h-[150px] justify-center items-center border rounded-2xl'>
-                <span className='text-[50px] mr-2'>0</span>
+            <div className="flex justify-center items-center">
+              <div className="flex bg-[#4527a0] text-white w-full mr-2 mb-2 h-[150px] justify-center items-center border rounded-2xl">
+                <span className="text-[50px] mr-2">{userContx?.user?.displayBalance}</span>
                 <span>Eaze Token</span>
               </div>
             </div>
-            <p className='text-2xl font-bold leading-tight my-4'>Current Exchange Rates</p>
-            <div className='flex md:flex-row flex-col mb-6'>
-              <div className='flex bg-[#532775] text-white md:w-1/4 w-full mr-2 mb-2 h-[150px] justify-center items-center border rounded-2xl'>
-                <span className='text-[50px] mr-2'>0</span>
-                <span>USD</span>
-              </div>
-              <div className='flex bg-[#532775] text-white md:w-1/4 w-full mr-2 mb-2 h-[150px] justify-center items-center border rounded-2xl'>
-                <span className='text-[50px] mr-2'> { nairadata?.data?.toString() } </span>
-                <span>NGN</span>
-              </div>
-              <div className='flex bg-[#532775] text-white md:w-1/4 w-full mr-2 mb-2 h-[150px] justify-center items-center border rounded-2xl'>
-                <span className='text-[50px] mr-2'>{ cedisdata.data?.toString()}</span>
-                <span>Cedis</span>
-              </div>
-              <div className='flex bg-[#532775] text-white md:w-1/4 w-full mr-2 mb-2 h-[150px] justify-center items-center border rounded-2xl'>
-                <span className='text-[50px] mr-2'>{cfadata.data?.toString()}</span>
-                <span>CFA</span>
-              </div>
+            <p className="text-2xl font-bold leading-tight my-4">
+              Current Exchange Rates
+            </p>
+            <div className="flex md:flex-row flex-col mb-6">
+              {currencies.map(
+                (curr, i) =>
+                  currencyPrices?.data && (
+                    <div
+                      key={i}
+                      className="flex bg-[#532775] text-white md:w-1/4 w-full mr-2 mb-2 h-[150px] justify-center items-center border rounded-2xl"
+                    >
+                      <span className="text-[50px] mr-2">
+                        {" "}
+                        {currencyPrices?.data[i]?.result?.toString()}{" "}
+                      </span>
+                      <span>{curr}</span>
+                    </div>
+                  )
+              )}
             </div>
           </div>
-          {/* <div className="mx-auto mt-10">
-            <p className='text-2xl font-bold leading-tight mb-8'>Recent Transactions</p>
-            <div className='container flex flex-row justify-between bg-[#d0c5c56e] p-3 my-2 rounded-xl border text-[#333333]'>
-              <div className='px-4'>
-                <p className='text-leading text-xl font-semi-bold leading-tight '>Sent <span>20</span><span className='ml-1'>CFA</span> to <span >0x2736384938</span></p>
+          <div className="mx-auto mt-10">
+            <p className="text-2xl font-bold leading-tight mb-8">
+              Recent Transactions
+            </p>
+            <div className="container flex flex-row justify-between bg-[#d0c5c56e] p-3 my-2 rounded-xl border text-[#333333]">
+              <div className="px-4">
+                <p className="text-leading text-xl font-semi-bold leading-tight ">
+                  Sent <span>20</span>
+                  <span className="ml-1">CFA</span> to <span>0x2736384938</span>
+                </p>
                 <p>2nd Sept, 2023</p>
               </div>
               <div>
-                <div className='px-4'>
-                  <Link href="/" className='text-center mt-2 flex justify-center underline'>
+                <div className="px-4">
+                  <Link
+                    href="/"
+                    className="text-center mt-2 flex justify-center underline"
+                  >
                     View Tx
                   </Link>
                 </div>
               </div>
             </div>
-            <div className='container flex flex-row justify-between bg-[#d0c5c56e] p-3 my-2 rounded-xl border text-[#333333]'>
-              <div className='px-4'>
-                <p className='text-leading text-xl font-semi-bold leading-tight'>Sent <span>20</span><span className='ml-1'>NGN</span> to <span >79283738383 UBA Bank</span></p>
+            <div className="container flex flex-row justify-between bg-[#d0c5c56e] p-3 my-2 rounded-xl border text-[#333333]">
+              <div className="px-4">
+                <p className="text-leading text-xl font-semi-bold leading-tight">
+                  Sent <span>20</span>
+                  <span className="ml-1">NGN</span> to{" "}
+                  <span>79283738383 UBA Bank</span>
+                </p>
                 <p>2nd Sept, 2023</p>
               </div>
-              <div className='px-4'>
-                <Link href="/" className='text-center mt-2 flex justify-center underline'>
+              <div className="px-4">
+                <Link
+                  href="/"
+                  className="text-center mt-2 flex justify-center underline"
+                >
                   View Tx
                 </Link>
               </div>
             </div>
-            <div className='container flex flex-row justify-between bg-[#d0c5c56e] p-3 my-2 rounded-xl border text-[#333333]'>
-              <div className='px-4'>
-                <p className='text-leading text-xl font-semi-bold leading-tight'>Received <span>20</span><span className='ml-1'>Cedis</span> from <span >0x79283738383</span></p>
+            <div className="container flex flex-row justify-between bg-[#d0c5c56e] p-3 my-2 rounded-xl border text-[#333333]">
+              <div className="px-4">
+                <p className="text-leading text-xl font-semi-bold leading-tight">
+                  Received <span>20</span>
+                  <span className="ml-1">Cedis</span> from{" "}
+                  <span>0x79283738383</span>
+                </p>
                 <p>6nd Sept, 2023</p>
               </div>
-              <div className='px-4'>
-                <Link href="/" className='text-center mt-2 flex justify-center underline'>
+              <div className="px-4">
+                <Link
+                  href="/"
+                  className="text-center mt-2 flex justify-center underline"
+                >
                   View Tx
                 </Link>
               </div>
             </div>
-          </div> */}
+          </div> 
         </div>
       </div>
-    </div >
-  )
+    </div>
+  );
 }

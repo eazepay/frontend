@@ -3,7 +3,7 @@ import Link from "next/link";
 import Navbar from "@/components/navbar-fund";
 import Footer from "@/components/footer";
 import { useContractWrite } from "wagmi";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, SetStateAction } from "react";
 
 import { useRouter } from "next/navigation";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "@/lib";
@@ -12,16 +12,20 @@ import { Context } from "@/context";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function FundWallet() {
-  const [username, setUsername] = useState("");
-  // const { user } = useContext(Context);
-  // console.log(user);
+  const [amount, setAmount] = useState("");
+  const [selectedCurrency, setSelectedCurrency] = useState('Naira');
+
+  const handleChange = (event: { target: { value: SetStateAction<string>; }; }) => {
+    setSelectedCurrency(event.target.value);
+  };
+
   const router = useRouter();
 
   const join = useContractWrite({
     address: CONTRACT_ADDRESS,
     abi: CONTRACT_ABI,
     functionName: "join",
-    // args: [username],
+    args: [amount, selectedCurrency],
   });
 
   const UpdateUser = (e: any) => {
@@ -61,11 +65,13 @@ export default function FundWallet() {
                     name="currency"
                     autoComplete="currency-name"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-[#532775] focus:ring-2 focus:ring-inset focus:ring-[#532775] sm:max-w-lg sm:text-sm sm:leading-6"
+                    onChange={handleChange}
+                    value={selectedCurrency}
                   >
-                    <option>Naira</option>
-                    <option>Cedis</option>
-                    <option>USD</option>
-                    <option>CFA</option>
+                    <option value="NGN">Naira</option>
+                    <option value="CDS">Cedis</option>
+                    <option value="USD">USD</option>
+                    <option value="CFA">CFA</option>
                   </select>
                 </div>
               </div>
@@ -85,7 +91,7 @@ export default function FundWallet() {
                     autoComplete="username"
                     required
                     placeholder="Input amount"
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={(e) => setAmount(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#532775] sm:text-sm sm:leading-6"
                   />
                 </div>

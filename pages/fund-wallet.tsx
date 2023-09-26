@@ -12,6 +12,7 @@ import { Context } from "@/context";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function FundWallet() {
+  const userContx = useContext(Context);
   const [amount, setAmount] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState('Naira');
 
@@ -19,30 +20,34 @@ export default function FundWallet() {
     setSelectedCurrency(event.target.value);
   };
 
+
+  
+  console.log("user id", userContx?.user.userId, amount, selectedCurrency)
+
   const router = useRouter();
 
-  const join = useContractWrite({
+  const fund = useContractWrite({
     address: CONTRACT_ADDRESS,
     abi: CONTRACT_ABI,
-    functionName: "join",
-    args: [amount, selectedCurrency],
+    functionName: "recharge",
+    args: [userContx?.user?.userId, selectedCurrency, amount],
   });
 
   const UpdateUser = (e: any) => {
     e.preventDefault();
-    join.write();
+    fund.write();
   };
 
   useEffect(() => {
-    if (join.isSuccess) {
+    if (fund.isSuccess) {
       router.push("/dashboard");
     }
 
-    if (join.isError) {
-      alert(join.error?.cause);
+    if (fund.isError) {
+      alert(fund.error?.cause);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [join.isSuccess, join.isError]);
+  }, [fund.isSuccess, fund.isError]);
 
   return (
     <main>
@@ -54,6 +59,27 @@ export default function FundWallet() {
           </h3>
           <div className="mt-1 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6" onSubmit={UpdateUser}>
+
+              <div>
+                <label
+                  htmlFor="question1"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Amount
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="amount"
+                    name="amount"
+                    type="number"
+                    autoComplete="amount"
+                    required
+                    placeholder="Input amount"
+                    onChange={(e) => setAmount(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#532775] sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
 
               <div className="sm:col-span-3">
                 <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
@@ -68,38 +94,17 @@ export default function FundWallet() {
                     onChange={handleChange}
                     value={selectedCurrency}
                   >
-                    <option value="NGN">Naira</option>
-                    <option value="CDS">Cedis</option>
-                    <option value="USD">USD</option>
-                    <option value="CFA">CFA</option>
+                    <option value="naira">Naira</option>
+                    <option value="cedis">Cedis</option>
+                    <option value="usdt">USDT</option>
+                    <option value="cefas">CFA</option>
                   </select>
                 </div>
               </div>
 
               <div>
-                <label
-                  htmlFor="question1"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Amount
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="username"
-                    name="username"
-                    type="number"
-                    autoComplete="username"
-                    required
-                    placeholder="Input amount"
-                    onChange={(e) => setAmount(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#532775] sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div>
                 <button
-                  disabled={join.isLoading}
+                  disabled={fund.isLoading}
                   className="flex w-full justify-center rounded-md bg-[#532775] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#532775] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#532775]"
                 >
                   Submit

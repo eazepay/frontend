@@ -20,13 +20,13 @@ import { ContextProvider } from "@/context";
 
 
 export default function App({ Component, pageProps }: AppProps) {
-  // const API_KEY = process.env.ALCHEMY_KEY;
-  // const PROJECT_ID = process.env.PROJECT_ID;
+  const API_KEY = process.env.ALCHEMY_KEY;
+  const PROJECT_ID = process.env.PROJECT_ID;
 
   const { chains, publicClient, webSocketPublicClient } = configureChains(
     [goerli],
     [
-      alchemyProvider({ apiKey: "FVhKzRogIAlI_zgqGdtgyVzZYTL9_yct"}),
+      alchemyProvider({ apiKey: "FVhKzRogIAlI_zgqGdtgyVzZYTL9_yct" }),
       publicProvider(),
     ]
   );

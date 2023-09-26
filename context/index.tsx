@@ -30,7 +30,7 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
   const { address } = useAccount();
   const [user, setUser] = useState({
     address: "Not connected",
-    displayName: "",
+    displayName: "Not connected",
     displayBalance: "displayBalance",
     balanceSymbol: "EZT",
     username: "username",

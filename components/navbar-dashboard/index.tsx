@@ -7,7 +7,7 @@ import { Context } from "@/context";
 import { useAccount, useDisconnect } from "wagmi";
 
 const Navbar: React.FC = () => {
-  const { user } = useContext(Context);
+  const userContx = useContext(Context);
   const { address } = useAccount();
   const { disconnect } = useDisconnect();
   const router = useRouter();
@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
               href=""
               className="font-semibold text-lg tracking-tight text-white justify-center items-center mt-5 mr-2"
             >
-              {user.displayName}
+              {userContx?.user?.displayName}
             </Link>
             <Link
               href="/fund-wallet"
@@ -79,7 +79,7 @@ const Navbar: React.FC = () => {
                 href=""
                 className="font-semibold text-lg tracking-tight text-white justify-center items-center  mr-2"
               >
-                {user.displayName}
+                {userContx?.user?.displayName}
               </Link>
               <Link
                 href="/create-account"

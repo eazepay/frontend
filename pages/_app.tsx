@@ -26,14 +26,14 @@ export default function App({ Component, pageProps }: AppProps) {
   const { chains, publicClient, webSocketPublicClient } = configureChains(
     [goerli],
     [
-      alchemyProvider({ apiKey: "FVhKzRogIAlI_zgqGdtgyVzZYTL9_yct" }),
+      alchemyProvider({ apiKey: "zgqGdtgyVzZYTL9_yct" }),
       publicProvider(),
     ]
   );
 
   const { connectors } = getDefaultWallets({
     appName: "Eaze",
-    projectId: "8a929aebabc3d63fc70ba30c3405b0dd",
+    projectId: "8a929aebabc3d63f",
     chains,
   });
 

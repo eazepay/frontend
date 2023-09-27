@@ -39,7 +39,7 @@ export const MetaMask = () => {
                   <button
                     onClick={openConnectModal}
                     type="button"
-                    className="flex flex-row justify-center items-center my-3 w-full border rounded-2xl bg-white py-[25px] px-[70px]"
+                    className="flex flex-row justify-center items-center my-3 w-full border rounded-2xl bg-white text-black py-[25px] px-[70px]"
                   >
                     <Image
                       width={40}

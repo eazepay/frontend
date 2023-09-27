@@ -43,7 +43,7 @@ export default function SeurityQuestions() {
   return (
     <main>
       <Navbar />
-      <div className="flex w-screen h-full bg-white  flex-1 flex-col justify-center px-6 py-1 lg:px-8">
+      <div className="flex w-screen h-full min-h-screen  bg-white  flex-1 flex-col justify-center px-6 py-1 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-lg">
           <h3 className="my-4 md:py-2 text-5xl font-bold text-black leading-tight text-center">
             Security Questions

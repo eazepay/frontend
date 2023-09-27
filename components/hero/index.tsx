@@ -9,7 +9,7 @@ export default function Hero() {
     //   background: "linear-gradient(90deg, rgba(131, 126, 226, 1) 24%, rgba(114, 114, 226, 1) 58%, rgba(0, 212, 255, 1) 100%)"
     // }}
     >
-      <div className="container mx-auto flex px-5 py-10 items-center justify-center md:flex-row-reverse flex-col-reverse">
+      <div className="container mx-auto flex px-5 py-10 lg:pt-[150px] lg:pb-[30px] items-center justify-center md:flex-row-reverse flex-col-reverse">
         <Image className="lg:w-2/6 md:w-3/6 w-full object-cover object-center mb-[80px]  md:mt-[68px]" alt="hero" src={hero} />
         <div className="text-left lg:w-6/12 w-full">
           <h1 className="my-4 mt-[80px] md:py-8 text-5xl font-bold leading-tight">

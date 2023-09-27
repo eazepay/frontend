@@ -46,7 +46,7 @@ export default function CreateAcount() {
         </div>
         <div className="w-[90%] md:w-1/2 mx-auto md:px-5 ">
           <div className="flex justify-center flex-col items-center">
-            <h3 className="my-4 md:mt-[100px] mt-[180px] md:py-8 text-5xl font-bold leading-tight md:text-left text-center">
+            <h3 className="my-4 md:mt-[100px] mt-[180px] md:py-8 lg:pt-[170px] text-5xl font-bold leading-tight md:text-left text-center">
               Create Your Account
             </h3>
             <div className="my-4">
@@ -54,7 +54,7 @@ export default function CreateAcount() {
                 <MetaMask />
               </div>
               {/* <br></br> */}
-              <button className="flex flex-row justify-center items-center my-3 w-full border rounded-2xl bg-white py-[25px] px-[70px]">
+              <button className="flex flex-row justify-center items-center my-3 w-full border rounded-2xl bg-white text-black py-[25px] px-[70px]">
                 <Image
                   width={40}
                   height={40}

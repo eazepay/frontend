@@ -56,6 +56,7 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
     if (userData?.data) {
       setUser({
         ...user,
+        address: userData?.data[2],
         displayName: userData?.data[0],
         username: userData?.data[0],
         userId: Number(userData?.data?.[3])?.toString(),

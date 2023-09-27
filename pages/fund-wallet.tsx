@@ -20,10 +20,6 @@ export default function FundWallet() {
     setSelectedCurrency(event.target.value);
   };
 
-
-  
-  console.log("user id", userContx?.user.userId, amount, selectedCurrency)
-
   const router = useRouter();
 
   const fund = useContractWrite({

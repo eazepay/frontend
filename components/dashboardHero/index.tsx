@@ -4,8 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { CONTRACT_CONFIG } from "@/lib";
 import { Context } from "@/context";
 import { useRouter } from "next/router";
-// import { useQuery } from '@apollo/client';
-// import gql from 'graphql-tag';
+import { gql, useQuery } from "@apollo/client";
 
 export default function DashboardHero() {
   const [naira, setNaira] = useState("");
@@ -19,16 +18,20 @@ export default function DashboardHero() {
     }
   }, [userContx?.user?.isActive, address, router]);
 
-  //     const GET_CURRENCY_WITHDRAWS = gql`
-  //   {
-  //     currencyWithdraws(first: 5) {
-  //       id
-  //       user
-  //       currencySymbol
-  //       amount
-  //     }
-  //   }
-  // `;
+  const GET_RECHARGE_TOKENS = gql`
+    {
+      rechargedTokens(id: 1001) {
+        id
+        user
+        currencySymbol
+        amount
+      }
+    }
+  `;
+
+  const { loading, error, data } = useQuery(GET_RECHARGE_TOKENS);
+
+  console.log("data", data, "loading", loading, "error", error);
 
   const currencyPrices = useContractReads({
     contracts: [

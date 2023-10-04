@@ -16,8 +16,7 @@ import { goerli } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { ContextProvider } from "@/context";
-
-
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 export default function App({ Component, pageProps }: AppProps) {
   const API_KEY = process.env.ALCHEMY_KEY;
@@ -56,12 +55,19 @@ export default function App({ Component, pageProps }: AppProps) {
     webSocketPublicClient,
   });
 
+  const client = new ApolloClient({
+    uri: "https://api.thegraph.com/subgraphs/name/greatsamist/eaze-graph",
+    cache: new InMemoryCache(),
+  });
+
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
-        <ContextProvider>
-          <Component {...pageProps} />
-        </ContextProvider>
+        <ApolloProvider client={client}>
+          <ContextProvider>
+            <Component {...pageProps} />
+          </ContextProvider>
+        </ApolloProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   );

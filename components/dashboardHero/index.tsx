@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { useAccount, useContractRead, useContractReads } from "wagmi";
+import { useAccount, useContractReads } from "wagmi";
 import { useContext, useEffect, useState } from "react";
-import { CONTRACT_ABI, CONTRACT_ADDRESS, CONTRACT_CONFIG } from "@/lib";
+import { CONTRACT_CONFIG } from "@/lib";
 import { Context } from "@/context";
 import { useRouter } from "next/router";
 // import { useQuery } from '@apollo/client';
@@ -11,7 +11,7 @@ export default function DashboardHero() {
   const [naira, setNaira] = useState("");
   const router = useRouter();
   const { address } = useAccount();
-  const userContx  = useContext(Context);
+  const userContx = useContext(Context);
 
   useEffect(() => {
     if (!address) {
@@ -52,7 +52,9 @@ export default function DashboardHero() {
             {/* <p className='text-2xl font-bold leading-tight mb-4'>Current Holding</p> */}
             <div className="flex justify-center items-center">
               <div className="flex bg-[#4527a0] text-white w-full mr-2 mb-2 h-[150px] justify-center items-center border rounded-2xl">
-                <span className="text-[50px] mr-2">{userContx?.user?.displayBalance}</span>
+                <span className="text-[50px] mr-2">
+                  {userContx?.user?.displayBalance}
+                </span>
                 <span>Eaze Token</span>
               </div>
             </div>
@@ -136,7 +138,7 @@ export default function DashboardHero() {
                 </Link>
               </div>
             </div>
-          </div> 
+          </div>
         </div>
       </div>
     </div>

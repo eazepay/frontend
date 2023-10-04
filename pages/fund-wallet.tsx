@@ -14,9 +14,11 @@ const inter = Inter({ subsets: ["latin"] });
 export default function FundWallet() {
   const userContx = useContext(Context);
   const [amount, setAmount] = useState("");
-  const [selectedCurrency, setSelectedCurrency] = useState('Naira');
+  const [selectedCurrency, setSelectedCurrency] = useState("naira");
 
-  const handleChange = (event: { target: { value: SetStateAction<string>; }; }) => {
+  const handleChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
     setSelectedCurrency(event.target.value);
   };
 
@@ -55,7 +57,6 @@ export default function FundWallet() {
           </h3>
           <div className="mt-1 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6" onSubmit={UpdateUser}>
-
               <div>
                 <label
                   htmlFor="question1"
@@ -78,7 +79,10 @@ export default function FundWallet() {
               </div>
 
               <div className="sm:col-span-3">
-                <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="country"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Choose Currency
                 </label>
                 <div className="mt-2">
@@ -103,7 +107,7 @@ export default function FundWallet() {
                   disabled={fund.isLoading}
                   className="flex w-full justify-center rounded-md bg-[#532775] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#532775] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#532775]"
                 >
-                  Submit
+                  {fund.isLoading ? "Processing..." : "Submit"}
                 </button>
               </div>
             </form>

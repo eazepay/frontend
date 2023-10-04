@@ -2,6 +2,7 @@
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "@/lib";
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { useAccount, useContractRead } from "wagmi";
+import { useWatchPendingTransactions } from "wagmi";
 
 interface User {
   address: string;
@@ -28,6 +29,7 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
   children,
 }) => {
   const { address } = useAccount();
+  const [newUpdate, setNewUpdate] = useState(false);
   const [user, setUser] = useState({
     address: "Not connected",
     displayName: "Not connected",
@@ -36,6 +38,11 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
     username: "username",
     userId: "userId",
     isActive: false,
+  });
+
+  useWatchPendingTransactions({
+    chainId: 1,
+    listener: (hashes) => setNewUpdate(true),
   });
 
   const userId = useContractRead({
@@ -65,7 +72,7 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address, userData?.data]);
+  }, [address, userData?.data, newUpdate]);
 
   return (
     <Context.Provider value={{ user, setUser }}>{children}</Context.Provider>

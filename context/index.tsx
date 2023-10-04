@@ -41,7 +41,7 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
   });
 
   useWatchPendingTransactions({
-    chainId: 1,
+    chainId: 5,
     listener: (hashes) => setNewUpdate(true),
   });
 

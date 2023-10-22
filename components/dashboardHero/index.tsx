@@ -29,9 +29,13 @@ export default function DashboardHero() {
     }
   `;
 
-  const { loading, error, data } = useQuery(GET_RECHARGE_TOKENS);
+  const {
+    loading,
+    error,
+    data: transactionData,
+  } = useQuery(GET_RECHARGE_TOKENS);
 
-  console.log("data", data, "loading", loading, "error", error);
+  // console.log("data", transactionData, "loading", loading, "error", error);
 
   const currencyPrices = useContractReads({
     contracts: [
@@ -86,7 +90,7 @@ export default function DashboardHero() {
             <p className="text-2xl font-bold leading-tight mb-8">
               Recent Transactions
             </p>
-            <div className="container flex flex-row justify-between bg-[#d0c5c56e] p-3 my-2 rounded-xl border text-[#333333]">
+            {/* <div className="container flex flex-row justify-between bg-[#d0c5c56e] p-3 my-2 rounded-xl border text-[#333333]">
               <div className="px-4">
                 <p className="text-leading text-xl font-semi-bold leading-tight ">
                   Sent <span>20</span>
@@ -104,8 +108,8 @@ export default function DashboardHero() {
                   </Link>
                 </div>
               </div>
-            </div>
-            <div className="container flex flex-row justify-between bg-[#d0c5c56e] p-3 my-2 rounded-xl border text-[#333333]">
+            </div> */}
+            {/* <div className="container flex flex-row justify-between bg-[#d0c5c56e] p-3 my-2 rounded-xl border text-[#333333]">
               <div className="px-4">
                 <p className="text-leading text-xl font-semi-bold leading-tight">
                   Sent <span>20</span>
@@ -122,8 +126,8 @@ export default function DashboardHero() {
                   View Tx
                 </Link>
               </div>
-            </div>
-            <div className="container flex flex-row justify-between bg-[#d0c5c56e] p-3 my-2 rounded-xl border text-[#333333]">
+            </div> */}
+            {/* <div className="container flex flex-row justify-between bg-[#d0c5c56e] p-3 my-2 rounded-xl border text-[#333333]">
               <div className="px-4">
                 <p className="text-leading text-xl font-semi-bold leading-tight">
                   Received <span>20</span>
@@ -140,7 +144,7 @@ export default function DashboardHero() {
                   View Tx
                 </Link>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
